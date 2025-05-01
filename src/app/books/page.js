@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { searchBooks } from "../services/booksApi";
-import BookList from "../../components/BookList";
+import BookList from "../components/BookList";
 
 const BooksPage = () => {
   const [books, setBooks] = useState([]);

@@ -3,8 +3,8 @@
 import { useTBR } from "../context/TBRContext"; 
 
 export default function AddToTBRButton({ book }) {
-  const { addToTBR } = useTBR(); // Now we can safely use this inside a Client Component
-
+  const { addToTBR } = useTBR(); 
+  
   const handleAddToTBR = () => {
     addToTBR(book);
     alert("Book added to your TBR list!");

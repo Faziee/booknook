@@ -24,6 +24,8 @@ export default function TBRPage() {
                   <Image
                     src={book.volumeInfo.imageLinks.thumbnail}
                     alt={book.volumeInfo.title}
+                    width={128} // equivalent to w-32
+                    height={192} // equivalent to h-48
                     className="w-32 h-48 object-cover rounded-md"
                   />
                 )}
