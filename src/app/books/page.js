@@ -5,10 +5,12 @@ import BookCard from "../components/BookCard";
 import BookReadHistory from "../components/BookReadHistory";
 
 export default function ReadPage() {
-  const { readBooks } = useTBR();
+  const { readBooks = [] } = useTBR(); // Default to empty array
 
-  // Group readings by book ID
-  const groupedReadings = readBooks.reduce((acc, reading) => {
+  // Safely group readings by book ID
+  const groupedReadings = (readBooks || []).reduce((acc, reading) => {
+    if (!reading?.id) return acc; // Skip if no book id
+    
     const bookId = reading.id;
     if (!acc[bookId]) {
       acc[bookId] = [];
@@ -17,44 +19,53 @@ export default function ReadPage() {
     return acc;
   }, {});
 
+  const bookCount = Object.keys(groupedReadings).length;
+
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">
-        Books You've Read ({Object.keys(groupedReadings).length})
+        Books You've Read ({bookCount})
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Object.entries(groupedReadings).map(([bookId, readings]) => {
-          const latestReading = readings[0];
-          const book = {
-            ...latestReading,
-            volumeInfo: latestReading.volumeInfo || {}
-          };
+      {bookCount === 0 ? (
+        <p className="text-gray-600">You haven't marked any books as read yet.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Object.entries(groupedReadings).map(([bookId, readings]) => {
+            const latestReading = readings[0];
+            // Ensure we have valid reading data
+            if (!latestReading) return null;
+            
+            const book = {
+              ...latestReading,
+              volumeInfo: latestReading.volumeInfo || {}
+            };
 
-          return (
-            <div key={bookId} className="border rounded-lg p-4">
-              <BookCard book={book} />
-              <div className="mt-4">
-                <div className="flex items-center mb-2">
-                  <span className="mr-2">Latest Rating:</span>
-                  <div className="text-yellow-500">
-                    {"★".repeat(latestReading.rating)}
-                    {"☆".repeat(5 - latestReading.rating)}
+            return (
+              <div key={bookId} className="border rounded-lg p-4">
+                <BookCard book={book} />
+                <div className="mt-4">
+                  <div className="flex items-center mb-2">
+                    <span className="mr-2">Latest Rating:</span>
+                    <div className="text-yellow-500">
+                      {"★".repeat(latestReading.rating || 0)}
+                      {"☆".repeat(5 - (latestReading.rating || 0))}
+                    </div>
                   </div>
+                  {latestReading.comment && (
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-600">"{latestReading.comment}"</p>
+                    </div>
+                  )}
+                  {readings.length > 1 && (
+                    <BookReadHistory readings={readings} />
+                  )}
                 </div>
-                {latestReading.comment && (
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-600">"{latestReading.comment}"</p>
-                  </div>
-                )}
-                {readings.length > 1 && (
-                  <BookReadHistory readings={readings} />
-                )}
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

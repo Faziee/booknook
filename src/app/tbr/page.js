@@ -1,15 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { useTBR } from "../context/TBRContext";
 import Link from "next/link";
 import BookCard from "../components/BookCard";
+import ReadModal from "../components/ReadModal"; // You'll need to create this
 
 export default function TBRPage() {
-  const { tbr, deleteFromTBR } = useTBR();
+  const { tbr, deleteFromTBR, markAsRead } = useTBR();
+  const [selectedBookId, setSelectedBookId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleMarkAsRead = (bookId) => {
-    // Placeholder: implement your mark-as-read logic here
-    alert(`Marked book ${bookId} as read!`);
+  const handleMarkAsReadClick = (bookId) => {
+    setSelectedBookId(bookId);
+    setIsModalOpen(true);
+  };
+
+  const handleSubmitRating = (rating, comment) => {
+    markAsRead(selectedBookId, rating, comment);
+    setIsModalOpen(false);
   };
 
   return (
@@ -28,23 +37,24 @@ export default function TBRPage() {
               className="flex items-start gap-6 mb-6"
             >
               {/* Book Info */}
-              <Link href={`/books/${book.id}`} passHref>
-                <div className="flex-shrink-0 group hover:scale-105 transition-transform duration-300">
-                  <BookCard book={book} />
-                </div>
-              </Link>
+              <Link 
+  href={`/books/${book.id}`} 
+  className="flex-shrink-0 group hover:scale-105 transition-transform duration-300"
+>
+  <BookCard book={book} />
+</Link>
 
               {/* Button Group */}
               <div className="flex flex-col gap-3">
-                {/* Mark as Read Button */}
+                {/* Updated Mark as Read Button */}
                 <button
-                  onClick={() => handleMarkAsRead(book.id)}
+                  onClick={() => handleMarkAsReadClick(book.id)}
                   className="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-md hover:bg-green-700 transition"
                 >
                   Mark as Read
                 </button>
 
-                {/* Remove Button (placed at the bottom) */}
+                {/* Remove Button */}
                 <button
                   onClick={() => deleteFromTBR(book.id)}
                   className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-md hover:bg-red-700 transition"
@@ -56,6 +66,13 @@ export default function TBRPage() {
           ))}
         </div>
       )}
+
+      {/* Rating Modal */}
+      <ReadModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmitRating}
+      />
     </div>
   );
 }

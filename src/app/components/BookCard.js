@@ -1,3 +1,4 @@
+"use client";
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,11 +7,8 @@ export default function BookCard({ book }) {
   const bookId = book.id || book.key;
 
   return (
-    <div 
-      key={bookId} 
-      className="w-50 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-    >
-      <Link href={`/books/${bookId}`} className="block h-full">
+    <Link href={`/books/${bookId}`} passHref>
+      <div className="w-50 bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-transform duration-300 cursor-pointer">
         <div className="h-55 bg-gray-100 flex items-center justify-center p-4">
           {volumeInfo.imageLinks?.thumbnail ? (
             <Image
@@ -33,7 +31,7 @@ export default function BookCard({ book }) {
             {volumeInfo.authors?.join(", ") || "Unknown Author"}
           </p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }

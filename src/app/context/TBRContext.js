@@ -1,45 +1,54 @@
 "use client";
-// context/TBRContext.js
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-// Create the TBR Context
-const TBRContext = createContext();
+export const TBRContext = createContext();
 
-// TBRProvider component that manages TBR list state and localStorage
-export const TBRProvider = ({ children }) => {
+export function TBRProvider({ children }) {
   const [tbr, setTBR] = useState([]);
+  const [readBooks, setReadBooks] = useState([]);
 
-  // Load from localStorage only on the client side
   useEffect(() => {
     const savedTBR = JSON.parse(localStorage.getItem("tbrList")) || [];
+    const savedRead = JSON.parse(localStorage.getItem("readBooks")) || [];
     setTBR(savedTBR);
+    setReadBooks(savedRead);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("tbrList", JSON.stringify(tbr));
+    localStorage.setItem("readBooks", JSON.stringify(readBooks));
+  }, [tbr, readBooks]);
+
   const addToTBR = (book) => {
-    setTBR((prevTBR) => {
-      const updatedTBR = [...prevTBR, book];
-      localStorage.setItem("tbrList", JSON.stringify(updatedTBR));
-      return updatedTBR;
-    });
+    setTBR(prev => [...prev, book]);
   };
 
-  // Delete a book from the TBR list
   const deleteFromTBR = (bookId) => {
-    setTBR((prevTBR) => {
-      const updatedTBR = prevTBR.filter((book) => book.id !== bookId);
-      localStorage.setItem("tbrList", JSON.stringify(updatedTBR));
-      return updatedTBR;
-    });
+    setTBR(prev => prev.filter(book => book.id !== bookId));
+  };
+
+  const markAsRead = (bookId, rating, comment = "") => {
+    const bookToMark = tbr.find(book => book.id === bookId);
+    if (!bookToMark) return;
+
+    setTBR(prev => prev.filter(book => book.id !== bookId));
+    setReadBooks(prev => [
+      ...prev,
+      {
+        ...bookToMark,
+        rating,
+        comment,
+        dateRead: new Date().toISOString(),
+        readId: `${bookId}-${Date.now()}`
+      }
+    ]);
   };
 
   return (
-    <TBRContext.Provider value={{ tbr, addToTBR, deleteFromTBR }}>
+    <TBRContext.Provider value={{ tbr, readBooks, addToTBR, deleteFromTBR, markAsRead }}>
       {children}
     </TBRContext.Provider>
   );
-};
+}
 
-// Custom hook to use the TBR context
-export const useTBR = () => {
-  return useContext(TBRContext);
-};
+export const useTBR = () => useContext(TBRContext);
