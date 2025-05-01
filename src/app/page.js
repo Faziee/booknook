@@ -2,7 +2,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { searchBooks } from "./services/booksApi";
 import Link from "next/link";
-import Image from 'next/image';
+
+import BookCard from "./components/BookCard";
 
 const HomePage = () => {
   // State for search functionality
@@ -94,188 +95,135 @@ const HomePage = () => {
   }, [loadBooks, searchQuery, selectedGenre]);
 
   return (
-    <div className="min-h-screen bg-pink-50 p-4 md:p-8">
+    <div className="min-h-screen p-4 md:p-8">
       {/* Header */}
       <header className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-purple-800 mb-2">
-          Fazie's BookNook <span className="text-3xl">ᡣ𐭩</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
-          Find your next great read with personalized recommendations
-        </p>
-      </header>
+  <h1 className="text-4xl md:text-5xl font-bold text-white-400 mb-3 leading-tight">
+    Fazie's BookNook <span className="text-3xl">ᡣ𐭩</span>
+  </h1>
+  <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
+    Find your next great read with personalized recommendations
+  </p>
+</header>
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto space-y-8">
-        {/* Random Book Section */}
-        <section className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Get a Random Book Recommendation
-          </h2>
-          
-          <div className="mb-6">
-            <p className="text-gray-700 mb-3 font-medium">Select genres:</p>
-            <div className="flex flex-wrap gap-2">
-              {genres.map(genre => (
-                <button
-                  key={genre}
-                  onClick={() => handleRandomGenreToggle(genre)}
-                  className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                    selectedGenres.includes(genre)
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                  }`}
-                >
-                  {genre}
-                </button>
-              ))}
-            </div>
-          </div>
+  {/* Random Book Section */}
+  <section className="bg-white rounded-xl shadow-lg p-8">
+    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      Get a Random Book Recommendation
+    </h2>
+    
+    {/* Genre Selection */}
+    <div className="mb-6">
+      <p className="text-gray-700 mb-3 font-medium">Pick Genres:</p>
+      <div className="flex flex-wrap gap-2">
+        {genres.map((genre) => (
+          <button
+            key={genre}
+            onClick={() => handleRandomGenreToggle(genre)}
+            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              selectedGenres.includes(genre)
+                ? 'bg-emerald-600 text-white'
+                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            {genre}
+          </button>
+        ))}
+      </div>
+    </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 items-center">
-            <button
-              onClick={getRandomBook}
-              disabled={selectedGenres.length === 0 || randomLoading}
-              className="px-6 py-2 bg-pink-600 text-white rounded-lg font-bold hover:bg-pink-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {randomLoading ? "Finding Your Book..." : "Randomize!"}
-            </button>
+    {/* Randomize Button */}
+    <div className="flex flex-col sm:flex-row gap-4 items-center">
+      <button
+        onClick={getRandomBook}
+        disabled={selectedGenres.length === 0 || randomLoading}
+        className="px-6 py-2 bg-rose-400 text-white rounded-lg font-bold hover:bg-rose-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {randomLoading ? "Finding Your Book..." : "Randomize!"}
+      </button>
 
-            {selectedGenres.length > 0 && (
-              <p className="text-sm text-gray-600">
-                Selected: {selectedGenres.join(", ")}
-              </p>
-            )}
-          </div>
+      {selectedGenres.length > 0 && (
+        <p className="text-sm text-gray-600">
+          Selected: {selectedGenres.join(", ")}
+        </p>
+      )}
+    </div>
 
-          {randomBook && (
-            <div className="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <div className="flex flex-col md:flex-row gap-4">
-                {randomBook.volumeInfo.imageLinks?.thumbnail && (
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={randomBook.volumeInfo.imageLinks.thumbnail}
-                      alt={randomBook.volumeInfo.title}
-                      width={120}
-                      height={180}
-                      className="rounded-lg shadow-sm"
-                    />
-                  </div>
-                )}
-                <div>
-                  <h3 className="text-lg font-bold text-purple-800 mb-1">
-                    {randomBook.volumeInfo.title}
-                  </h3>
-                  <p className="text-gray-600 mb-2">
-                    {randomBook.volumeInfo.authors?.join(", ") || "Unknown Author"}
-                  </p>
-                  {randomBook.volumeInfo.description && (
-                    <p className="text-gray-700 text-sm line-clamp-3 mb-3">
-                      {randomBook.volumeInfo.description}
-                    </p>
-                  )}
-                  <Link 
-                    href={`/books/${randomBook.id}`}
-                    className="inline-block px-4 py-2 bg-white text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50 transition"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
-        </section>
+    {/* Random Book Display */}
+    {randomBook && (
+      <div className="mt-6 text-center">
+        <BookCard book={randomBook} />
+        <Link
+          href={`/books/${randomBook.id}`}
+          className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-purple-700 mt-4 transition-all duration-300"
+        >
+          View Details
+        </Link>
+      </div>
+    )}
+  </section>
 
-        {/* Search Section */}
-        <section className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Search for Books
-          </h2>
-          
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                placeholder="Search by title or author"
-                value={searchQuery}
-                onChange={handleSearch}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <select
-                onChange={handleGenreChange}
-                value={selectedGenre}
-                className="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              >
-                <option value="">All Genres</option>
-                {genres.map((genre) => (
-                  <option key={genre} value={genre}>
-                    {genre}
-                  </option>
-                ))}
-              </select>
-              
-              <button
-                onClick={loadBooks}
-                disabled={loading}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50"
-              >
-                {loading ? "Searching..." : "Search Books"}
-              </button>
-            </div>
-          </div>
-        </section>
+  {/* Search Section */}
+  <section className="bg-white rounded-xl shadow-lg p-8">
+    <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      Search for Books
+    </h2>
 
-        {/* Error Message */}
-        {error && (
-          <div className="p-4 bg-red-100 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
+    <div className="space-y-4">
+      {/* Search Input */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search by title or author"
+          value={searchQuery}
+          onChange={handleSearch}
+          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-800"
+        />
+      </div>
 
-        {/* Search Results */}
-        {books.length > 0 && (
-          <section>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              Search Results ({books.length})
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {books.map((book) => (
-                <div 
-                  key={book.id} 
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <Link href={`/books/${book.id}`} className="block h-full">
-                    <div className="h-48 bg-gray-100 flex items-center justify-center p-4">
-                      {book.volumeInfo.imageLinks?.thumbnail ? (
-                        <Image
-                          src={book.volumeInfo.imageLinks.thumbnail}
-                          alt={book.volumeInfo.title}
-                          width={120}
-                          height={180}
-                          className="object-contain h-full"
-                        />
-                      ) : (
-                        <span className="text-gray-400">No cover available</span>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-medium text-gray-900 line-clamp-2">
-                        {book.volumeInfo.title}
-                      </h4>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {book.volumeInfo.authors?.join(", ") || "Unknown Author"}
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </main>
+      {/* Genre Selector and Search Button */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <select
+          onChange={handleGenreChange}
+          value={selectedGenre}
+          className="flex-grow p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-800"
+        >
+          <option value="">All Genres</option>
+          {genres.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+
+        <button
+          onClick={loadBooks}
+          disabled={loading}
+          className="px-6 py-3 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 transition-all duration-300 disabled:opacity-50"
+        >
+          {loading ? "Searching..." : "Search Books"}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  {/* Search Results */}
+  {books.length > 0 && (
+    <section>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">
+        Search Results ({books.length})
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
+        {books.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))}
+      </div>
+    </section>
+  )}
+</main>
+
     </div>
   );
 };

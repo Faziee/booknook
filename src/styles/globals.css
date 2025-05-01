@@ -1,27 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: rgb(241, 183, 183);
-  --foreground:rgb(255, 255, 255);
+  --background: rgb(185, 220, 196); /* Light pastel pink */
+  --foreground: rgb(255, 255, 255); /* White */
 }
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-} */
-
-/* Dark mode overrides */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: rgb(241, 183, 183);
-    --foreground: #ededed;
-  }
-}
+    --background: rgb(38, 38, 38); /* Darker background for dark mode */
+    /* --foreground: #ededed; Lighter foreground for dark mode */
+  /* }
+} */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+

@@ -1,8 +1,8 @@
 // components/Footer.js
 export default function Footer() {
     return (
-      <footer className="bg-gray-800 text-white p-4 text-center">
-        <p>© 2025 Book App. All Rights Reserved.</p>
+      <footer className="bg-teal-950 text-white p-6 text-center mt-10">
+        <p className="text-sm">© 2025 BookNook. All Rights Reserved.</p>
       </footer>
     );
   }  
