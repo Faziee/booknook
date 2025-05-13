@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: rgb(185, 220, 196); /* Light pastel pink */
+  --background: rgb(178, 226, 193); /* Light pastel pink */
   --foreground: rgb(255, 255, 255); /* White */
 }
 
