@@ -47,7 +47,7 @@ export default function BookReadHistory({ readings }) {
               </div>
               {reading.comment && (
                 <p className="text-sm text-gray-700 mt-1">
-                  "{reading.comment}"
+                  &quot;{reading.comment}&quot;
                 </p>
               )}
               {index < readings.length - 1 && (

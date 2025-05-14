@@ -26,7 +26,7 @@ export default function ReadPage() {
 
       {bookCount === 0 ? (
         <p className="text-gray-600">
-          You haven't marked any books as read yet.
+          You haven&apos;t marked any books as read yet.
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -54,7 +54,7 @@ export default function ReadPage() {
                   {latestReading.comment && (
                     <div className="mt-2">
                       <p className="text-sm text-gray-600">
-                        "{latestReading.comment}"
+                      &quot;{latestReading.comment}&quot;
                       </p>
                     </div>
                   )}
