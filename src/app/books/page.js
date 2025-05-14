@@ -1,16 +1,15 @@
-// app/read/page.js
 "use client";
+
 import { useTBR } from "../context/TBRContext";
 import BookCard from "../components/BookCard";
 import BookReadHistory from "../components/BookReadHistory";
 
 export default function ReadPage() {
-  const { readBooks = [] } = useTBR(); // Default to empty array
+  const { readBooks = [] } = useTBR();
 
-  // Safely group readings by book ID
   const groupedReadings = (readBooks || []).reduce((acc, reading) => {
     if (!reading?.id) return acc; // Skip if no book id
-    
+
     const bookId = reading.id;
     if (!acc[bookId]) {
       acc[bookId] = [];
@@ -23,22 +22,22 @@ export default function ReadPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">
-        Books You've Read ({bookCount})
-      </h1>
+      <h1 className="text-2xl font-bold mb-6">Books Read ({bookCount})</h1>
 
       {bookCount === 0 ? (
-        <p className="text-gray-600">You haven't marked any books as read yet.</p>
+        <p className="text-gray-600">
+          You haven't marked any books as read yet.
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.entries(groupedReadings).map(([bookId, readings]) => {
             const latestReading = readings[0];
             // Ensure we have valid reading data
             if (!latestReading) return null;
-            
+
             const book = {
               ...latestReading,
-              volumeInfo: latestReading.volumeInfo || {}
+              volumeInfo: latestReading.volumeInfo || {},
             };
 
             return (
@@ -54,7 +53,9 @@ export default function ReadPage() {
                   </div>
                   {latestReading.comment && (
                     <div className="mt-2">
-                      <p className="text-sm text-gray-600">"{latestReading.comment}"</p>
+                      <p className="text-sm text-gray-600">
+                        "{latestReading.comment}"
+                      </p>
                     </div>
                   )}
                   {readings.length > 1 && (

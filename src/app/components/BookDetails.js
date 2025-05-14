@@ -1,4 +1,3 @@
-// components/BookDetails.js
 import Image from "next/image";
 import AddToTBRButton from "./AddToTBRButton";
 
@@ -24,7 +23,7 @@ export default function BookDetails({ book }) {
 
   return (
     <div className="max-w-5xl mx-auto px-8 py-8 grid grid-cols-3 gap-8">
-      {/* Left Section - Book Cover, Title, Author */}
+      {/* Left Section: Book Cover, Title, Author */}
       <div className="col-span-1 flex flex-col items-center text-center">
         <Image
           src={imageLinks?.thumbnail || "/placeholder.jpg"}
@@ -36,27 +35,39 @@ export default function BookDetails({ book }) {
         <h1 className="text-2xl font-bold mb-2">{title}</h1>
       </div>
 
-      {/* Right Section - Book Details */}
+      {/* Right Section: Book Details */}
       <div className="col-span-2 flex flex-col justify-start mt-3">
         <h2 className="text-lg text-gray-600 font-semibold mb-4">
           Author: {authors?.join(", ") || "Unknown Author"}
         </h2>
-        <p className="text-base text-gray-500 mb-2">Genre: {categories?.join(", ") || "N/A"}</p>
-        <p className="text-base text-gray-500 mb-2">Released: {publishedDate || "Unknown Date"}</p>
-        <p className="text-base text-gray-500 mb-2">Pages: {pageCount || "N/A"}</p>
-        <p className="text-base text-gray-500 mb-2">Language: {language?.toUpperCase() || "N/A"}</p>
-        <p className="text-base text-gray-500 mb-2">Publisher: {publisher || "N/A"}</p>
+        <p className="text-base text-gray-500 mb-2">
+          Genre: {categories?.join(", ") || "N/A"}
+        </p>
+        <p className="text-base text-gray-500 mb-2">
+          Released: {publishedDate || "Unknown Date"}
+        </p>
+        <p className="text-base text-gray-500 mb-2">
+          Pages: {pageCount || "N/A"}
+        </p>
+        <p className="text-base text-gray-500 mb-2">
+          Language: {language?.toUpperCase() || "N/A"}
+        </p>
+        <p className="text-base text-gray-500 mb-2">
+          Publisher: {publisher || "N/A"}
+        </p>
         <p className="text-base text-gray-500 font-semibold">ISBN: {isbn}</p>
 
         {/* Add to TBR Button */}
         <AddToTBRButton book={book} />
       </div>
 
-      {/* Bottom Section - Description */}
+      {/* Bottom Section: Description */}
       <div className="col-span-3 mt-4 prose max-w-none text-sm">
         <h3 className="text-lg font-bold mb-2">Description</h3>
         <div
-          dangerouslySetInnerHTML={{ __html: description || "<p>No description available.</p>" }}
+          dangerouslySetInnerHTML={{
+            __html: description || "<p>No description available.</p>",
+          }}
         />
       </div>
 

@@ -1,5 +1,5 @@
-// components/ReadModal.js
 "use client";
+
 import { useState } from "react";
 
 export default function ReadModal({ isOpen, onClose, onSubmit }) {
@@ -18,8 +18,10 @@ export default function ReadModal({ isOpen, onClose, onSubmit }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
         <div className="flex justify-between items-start mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">Finished Reading?</h2>
-          <button 
+          <h2 className="text-2xl font-bold text-gray-800">
+            Finished Reading?
+          </h2>
+          <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
@@ -47,11 +49,11 @@ export default function ReadModal({ isOpen, onClose, onSubmit }) {
               ))}
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              {rating} star{rating !== 1 ? 's' : ''}
+              {rating} star{rating !== 1 ? "s" : ""}
             </p>
           </div>
 
-          {/* Comment Section - Fixed visibility */}
+          {/* Comment Section*/}
           <div>
             <p className="text-sm font-medium text-gray-700 mb-2">
               Any thoughts or notes for future you?

@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: rgb(178, 226, 193); /* Light pastel pink */
-  --foreground: rgb(255, 255, 255); /* White */
+  --background: rgb(178, 226, 193);
+  /* Light pastel pink */
+  --foreground: rgb(255, 255, 255);
+  /* White */
 }
 
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: rgb(38, 38, 38); /* Darker background for dark mode */
-    /* --foreground: #ededed; Lighter foreground for dark mode */
-  /* }
+/* --foreground: #ededed; Lighter foreground for dark mode */
+/* }
 } */
 
 body {
@@ -17,4 +19,3 @@ body {
   color: var(--foreground);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 const BookList = ({ books, onBookClick }) => {
   return (
@@ -12,12 +12,14 @@ const BookList = ({ books, onBookClick }) => {
           >
             <Image
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
-              alt={book.volumeInfo?.title || 'Book cover'}
-              width={128}  // required
-              height={192} // required
+              alt={book.volumeInfo?.title || "Book cover"}
+              width={128}
+              height={192}
               className="w-32 h-48 object-cover"
             />
-            <h3 className="text-lg text-black mt-2">{book.volumeInfo?.title}</h3>
+            <h3 className="text-lg text-black mt-2">
+              {book.volumeInfo?.title}
+            </h3>
           </div>
         ))
       ) : (

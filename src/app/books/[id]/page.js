@@ -1,10 +1,11 @@
-// pages/books/[id]/page.js
 import { notFound } from "next/navigation";
 import BookDetails from "../../components/BookDetails";
 
 async function getBook(id) {
   try {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
+    const res = await fetch(
+      `https://www.googleapis.com/books/v1/volumes/${id}`
+    );
     const contentType = res.headers.get("content-type");
 
     if (!res.ok || !contentType || !contentType.includes("application/json")) {
