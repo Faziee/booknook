@@ -1,12 +1,12 @@
-# Fazie's BookNook - Your Personal Reading Tracker 📚
+# Fazie's BookNook - Your Personal Reading Tracker
 
-![Deployed on Vercel](https://booknook-six.vercel.app/)
+[Deployed on Vercel](https://booknook-six.vercel.app/)
 
 A modern book tracking website built with Next.js that helps you manage your reading journey. Track books you want to read (TBR), record books you've completed, and discover new reads.
 
 ![BookNook Screenshot](/public/homepage.png)
 
-## Features ✨
+## Features
 
 ### Reading Management
 - **To-Be-Read (TBR) List**: Track books you plan to read
@@ -23,7 +23,7 @@ A modern book tracking website built with Next.js that helps you manage your rea
 - **Genre Filtering**: Find books by your preferred genres
 - **Random Book Generator**: Get surprise recommendations
 
-## Tech Stack ⚙️
+## Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
@@ -31,7 +31,7 @@ A modern book tracking website built with Next.js that helps you manage your rea
 - **API**: [Google Books API](https://developers.google.com/books)
 - **Deployment**: [Vercel](https://vercel.com)
 
-## Getting Started 🚀
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18 or later)
