@@ -99,7 +99,7 @@ const HomePage = () => {
       {/* Header */}
       <header className="text-center mb-8">
         <h1 className="text-4xl md:text-5xl font-bold text-white-400 mb-3 leading-tight">
-          Fazie&apos;s BookNook <span className="text-3xl">ᡣ𐭩</span>
+          Fazie&apos;s BookNook<span className="text-3xl"> ᡣ𐭩</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
           Find your next great read with personalized recommendations
